@@ -12,8 +12,7 @@ app.use(logfmt.requestLogger());
 // Routes definitions
 var routes = {
 	root: '/',
-	app: '/app/:appID',
-	search: '/search/:queryStr'
+	app: '/app/:appID'
 }
 
 // API response headers
@@ -27,7 +26,6 @@ var apiHeaders = {
 // Routing Root
 app.get(routes.root, function(req, res) {
 	var warningString = "Usage: /app/:appid"+ " <br/>"+" Example: /app/com.meetsapp";
-	warningString += "<br />Usage: /search/:appName"+ " <br/>"+" Example: /search/meetsapp";
 	res.send(warningString);
 });
 
@@ -39,7 +37,7 @@ app.get(routes.app, function(req, res) {
 	// Get options from request
 	var options = {
 		appID: req.params.appID,
-		lang: req.headers["accept-language"].split(",")[0].replace("-", "_")
+//		lang: req.headers["accept-language"].split(",")[0].replace("-", "_")
 	};
 
 	API.getApp(options, function(json) {
@@ -47,22 +45,9 @@ app.get(routes.app, function(req, res) {
 	});
 });
 
-app.get(routes.search, function(req, res) {
-	res.writeHead(200, apiHeaders);
-
-	// Get options from request
-	var options = {
-		queryStr: req.params.queryStr,
-		lang: req.headers["accept-language"].split(",")[0].replace("-", "_")
-	};
-
-	API.getSearch(options, function(json) {
-		res.end(json);
-	})
-});
 
 // Initialize
-var port = Number(process.env.PORT || 5000);
+var port = Number(process.env.PORT || 5200);
 app.listen(port, function() {
 	console.log("Listening on " + port);
 });
