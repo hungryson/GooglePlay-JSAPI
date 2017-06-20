@@ -62,7 +62,8 @@ module.exports = {
 		var r_version = wrapper.find("[itemprop=softwareVersion]").text().trim();
 		var r_numDownloads = wrapper.find("[itemprop=numDownloads]").text().trim();
 		r_numDownloads = r_numDownloads.replace(/,/g,'');
-		var n_arr = r_numDownloads.split("-").map(val =>Number(val));
+//		var n_arr = r_numDownloads.split("-").map(val =>Number(val));
+		var n_arr = r_numDownloads.split("-").map(function(val){return  Number(val)});
 //		var r_fileSize = wrapper.find("[itemprop=fileSize]").text().trim();
 
 		return {
